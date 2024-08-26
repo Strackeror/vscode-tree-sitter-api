@@ -43,7 +43,8 @@ async function buildWasm() {
   const buildPackage = async (pkg: string, path: string = pkg) => {
     const command = new Deno.Command(treeSitterCli, {
       args: [
-        "build-wasm",
+        "build",
+        "--wasm",
         `../node_modules/${path}`,
       ],
       cwd: outDir,
@@ -81,7 +82,7 @@ async function updateDts() {
 }
 
 async function updateTextObjects() {
-  const helixVersion = "23.10";
+  const helixVersion = "24.07";
   const resp = await fetch(
     `https://github.com/helix-editor/helix/archive/refs/tags/${helixVersion}.zip`,
   );

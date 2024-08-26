@@ -32,10 +32,36 @@
         "category": "Tree Sitter",
         "enablement": "tree-sitter.activeEditorIsSupported"
       }
+    ],
+    "configuration": [
+      {
+        "title": "Tree Sitter API",
+        "properties": {
+          "tree-sitter.overrideWasmFile": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "scope": "language-overridable",
+            "default": null,
+            "description": "Override the path to the tree-sitter wasm file to use",
+            "format": "uri"
+          },
+          "tree-sitter.overrideTextObjectFile": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "scope": "language-overridable",
+            "default": null,
+            "description": "Override the path to the text object file to use"
+          }
+        }
+      }
     ]
   },
   "scripts": {
-    "compile": "yarn run esbuild-base --define:DEV=false --minify",
+    "compile": "yarn run esbuild-base --define:DEV=false",
     "compile:dts": "tsc --project . --declaration --emitDeclarationOnly && ./tools.ts --update-dts",
     "compile:wasm": "./tools.ts --build-wasm",
     "esbuild-base": "esbuild src/extension.ts --bundle --loader:.wasm=file --platform=node --target=node16 --external:vscode --outdir=out",
@@ -43,34 +69,34 @@
     "watch": "yarn run esbuild-base --define:DEV=true --sourcemap --watch",
     "watch:test": "globstar -- esbuild \"src/test/**/*.ts\" --platform=node --format=cjs --target=node16 --outdir=out/test --sourcemap --watch",
     "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts; deno fmt --check README.md src/ tools.ts",
+    "lint": "eslint src; deno fmt --check README.md src/ tools.ts",
     "test": "node ./out/test/runTest.js",
     "vscode:prepublish": "yarn run compile"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
+    "@types/node": "22.5.0",
     "@types/vscode": "^1.77.0",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
+    "@typescript-eslint/eslint-plugin": "^8.2.0",
+    "@typescript-eslint/parser": "^8.2.0",
     "@vscode/test-electron": "^2.3.0",
-    "@vscode/vsce": "^2.19.0",
-    "esbuild": "^0.17.14",
-    "eslint": "^8.36.0",
-    "glob": "^10.2.1",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.23.1",
+    "eslint": "^9.9.1",
+    "glob": "^11.0.0",
     "globstar": "^1.0.0",
     "mocha": "^10.2.0",
-    "tree-sitter-c": "^0.20.2",
-    "tree-sitter-cli": "^0.20.8",
-    "tree-sitter-cpp": "^0.20.0",
-    "tree-sitter-go": "^0.19.1",
-    "tree-sitter-html": "^0.19.0",
-    "tree-sitter-javascript": "^0.19.0",
-    "tree-sitter-python": "^0.20.1",
-    "tree-sitter-rust": "^0.20.3",
-    "tree-sitter-typescript": "^0.20.1",
-    "typescript": "^4.9.5",
-    "web-tree-sitter": "^0.20.8"
+    "tree-sitter-c": "^0.21.4",
+    "tree-sitter-cli": "^0.23.0",
+    "tree-sitter-cpp": "^0.22.3",
+    "tree-sitter-go": "^0.21.2",
+    "tree-sitter-html": "^0.20.4",
+    "tree-sitter-javascript": "^0.21.4",
+    "tree-sitter-python": "^0.21.0",
+    "tree-sitter-rust": "^0.21.0",
+    "tree-sitter-typescript": "^0.21.2",
+    "typescript": "^5.5.4",
+    "web-tree-sitter": "^0.23.0"
   }
 }

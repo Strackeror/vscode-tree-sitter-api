@@ -81,14 +81,14 @@ export declare function documentTreeSync(document: vscode.TextDocument, options?
  *
  * @see {@link https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax}
  */
-export declare function query(language: HasLanguage): (strings: TemplateStringsArray, ...args: any) => Promise<Query>;
+export declare function query(language: HasLanguage): (strings: TemplateStringsArray, ...args: unknown[]) => Promise<Query>;
 export declare function query(language: HasLanguage, source: string): Promise<Query>;
 /**
  * Compiles the given string into a {@link Query} object which can be used to
  * perform queries on nodes of the given language, failing if it is not already
  * {@link ensureLoaded loaded}.
  */
-export declare function querySync(language: HasLanguage): (strings: TemplateStringsArray, ...args: any) => Query;
+export declare function querySync(language: HasLanguage): (strings: TemplateStringsArray, ...args: unknown[]) => Query;
 export declare function querySync(language: HasLanguage, source: string): Query;
 /**
  * Executes the specified function with the result of {@link documentTree()},
@@ -96,7 +96,7 @@ export declare function querySync(language: HasLanguage, source: string): Query;
  */
 export declare const withDocumentTree: {
     <T>(document: vscode.TextDocument, k: (tree: Tree) => T | PromiseLike<T>): Promise<T>;
-    <T_1>(document: vscode.TextDocument, options: DocumentTreeOptions | undefined, k: (tree: Tree) => T_1 | PromiseLike<T_1>): Promise<T_1>;
+    <T>(document: vscode.TextDocument, options: DocumentTreeOptions | undefined, k: (tree: Tree) => T | PromiseLike<T>): Promise<T>;
 };
 /**
  * Executes the specified function with the result of {@link documentTreeSync()},
@@ -104,18 +104,22 @@ export declare const withDocumentTree: {
  */
 export declare const withDocumentTreeSync: {
     <T>(document: vscode.TextDocument, k: (tree: Tree) => T): T;
-    <T_1>(document: vscode.TextDocument, options: DocumentTreeOptions | undefined, k: (tree: Tree) => T_1): T_1;
+    <T>(document: vscode.TextDocument, options: DocumentTreeOptions | undefined, k: (tree: Tree) => T): T;
 };
 /**
  * Executes the specified function with the result of {@link query()},
  * {@link Query.delete() deleting} the query after the end of the function.
  */
-export declare const withQuery: <T>(language: HasLanguage, source: string, k: (query: Query) => T | PromiseLike<T>) => Promise<T>;
+export declare const withQuery: {
+    <T>(language: HasLanguage, source: string, k: (query: Query) => T | PromiseLike<T>): Promise<T>;
+};
 /**
  * Executes the specified function with the result of {@link querySync()},
  * {@link Query.delete() deleting} the query after the end of the function.
  */
-export declare const withQuerySync: <T>(language: HasLanguage, source: string, k: (query: Query) => T) => T;
+export declare const withQuerySync: {
+    <T>(language: HasLanguage, source: string, k: (query: Query) => T): T;
+};
 /**
  * Executes the specified function with the given arguments, calling
  * `arg.delete()` for each `arg` in `args` after the end of its execution.
